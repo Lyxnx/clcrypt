@@ -48,7 +48,7 @@ public class Main {
         System.out.println();
         
         try {
-            for (String string : cmd.getArgs()) {
+            for (String string : cmdArgs) {
                 System.out.println(string + " = " + hash(hashType, string));
             }
         } catch (NoSuchAlgorithmException e) {
