@@ -1,4 +1,4 @@
-# CLCrypt
+## CLCrypt
 ---
 
 #### What is CLCrypt?
