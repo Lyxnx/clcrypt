@@ -1,7 +1,5 @@
 <h1>CLCrypt</h1>
 
-------------------
-
 #### What is CLCrypt?
 CLCrypt is a simple command line text encrypting tool written in Java
 
