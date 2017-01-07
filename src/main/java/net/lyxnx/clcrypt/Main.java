@@ -9,8 +9,6 @@ import java.util.Arrays;
 
 public class Main {
     
-    // java -jar CLCrypt.jar --type md5 --encrypt TEXT
-    
     public static void main(String[] args) {
         Options options = new Options();
         
@@ -28,7 +26,7 @@ public class Main {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
             System.out.println(e.getMessage());
-            formatter.printHelp("utility-name", options);
+            formatter.printHelp("<type> <text>[,...]", options);
             
             System.exit(1);
             return;
