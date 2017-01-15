@@ -34,6 +34,12 @@ public class Main {
         
         Type hashType = Type.of(cmd.getOptionValue("type"));
         
+        if (hashType == null) {
+            System.out.println("Invalid hash type.");
+
+            System.exit(1);
+        }
+        
         String[] cmdArgs = cmd.getArgs();
         
         if (cmdArgs.length == 0) {

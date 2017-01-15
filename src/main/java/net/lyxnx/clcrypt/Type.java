@@ -6,16 +6,13 @@ public enum Type {
     MD5,
     SHA_1,
     SHA_256,
+    SHA_384,
     SHA_512;
     
     public static Type of(String string) {
-        if (string == null) {
-            return MD5;
-        }
-        
         return Arrays.stream(values())
-                .filter(t -> t.name().toLowerCase().replace("_", "").equals(string))
-                .findFirst().orElse(MD5);
+                .filter(t -> t.name().toLowerCase().replace("_", "").equalsIgnoreCase(string))
+                .findFirst().orElse(null);
     }
     
     @Override
