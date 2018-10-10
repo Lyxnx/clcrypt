@@ -10,7 +10,15 @@ Running CLCrypt is simple. All you need to do is pass one command line argument.
 * `<text> [...]` After specifying the type of hash to use, specify the text. Separate a string with `"` to treat is as one (useful if it has spaces.) To pass more than one string, just separate them by spaces. To use `"` in a string, it will have to be escaped using `\`. This will now make it `\"`.
 
 #### Building
-To build CLCrypt you need Maven
-* Run `mvn clean package` from the command line
+To build CLCrypt you need Gradle, or if not, you can use the provided scripts:
 
-Voila, the final jar will be in the `target` folder.
+To use the scripts, run either:
+* Linux/*NIX/macOS: `./gradlew shadowJar`
+* Windows: `gradlew.bat shadowJar`
+
+Or just use the gradle command:
+* `gradle shadowJar`
+
+from the command line
+
+The final jar will be in the `build/libs` folder.
