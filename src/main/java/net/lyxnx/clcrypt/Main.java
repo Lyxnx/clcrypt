@@ -1,51 +1,56 @@
 package net.lyxnx.clcrypt;
 
-import org.apache.commons.cli.*;
+import joptsimple.OptionException;
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
+import java.util.List;
 
 public class Main {
     
-    public static void main(String[] args) {
-        Options options = new Options();
+    public static void main(String[] args) throws IOException {
+        OptionParser parser = new OptionParser();
         
-        Option type = new Option("t", "type", true, "Hash type " + Arrays.toString(Type.values()));
-        type.setRequired(true);
+        parser.acceptsAll(Arrays.asList("t", "type"), "Required hash type")
+                .withRequiredArg()
+                .required();
         
-        options.addOption(type);
+        parser.acceptsAll(Arrays.asList("h", "?", "help"), "Display usage information")
+                .forHelp();
         
-        CommandLineParser parser = new BasicParser();
-        HelpFormatter formatter = new HelpFormatter();
-        
-        CommandLine cmd;
+        OptionSet options;
         
         try {
-            cmd = parser.parse(options, args);
-        } catch (ParseException e) {
+            options = parser.parse(args);
+        } catch (OptionException e) {
             System.out.println(e.getMessage());
-            formatter.printHelp("<type> <text>[,...]", options);
-            
-            System.exit(1);
+            parser.printHelpOn(System.out);
             return;
         }
         
-        Type hashType = Type.of(cmd.getOptionValue("type"));
-        
-        if (hashType == null) {
-            System.out.println("Invalid hash type.");
-
-            System.exit(1);
+        if (options.has("help")) {
+            parser.printHelpOn(System.out);
+            return;
         }
         
-        String[] cmdArgs = cmd.getArgs();
+        Type hashType = Type.of(options.valueOf("type").toString());
         
-        if (cmdArgs.length == 0) {
-            System.out.println("Missing text to encrypt");
+        if (hashType == null) {
+            System.err.println("Invalid hash type.");
+            System.err.println("Supported hash types: " + mkString(Type.values()));
             
-            System.exit(1);
+            return;
+        }
+        
+        List<String> cmdArgs = (List<String>) options.nonOptionArguments();
+        
+        if (cmdArgs.isEmpty()) {
+            System.err.println("Missing text to encrypt");
             return;
         }
         
@@ -60,6 +65,21 @@ public class Main {
         } catch (NoSuchAlgorithmException e) {
             System.out.println("An error has occurred: " + e.getMessage());
         }
+    }
+    
+    private static <T> String mkString(T[] arr) {
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+        
+        for (T x : arr) {
+            if (first) {
+                sb.append(x);
+                first = false;
+            } else
+                sb.append(", ").append(x);
+        }
+        
+        return sb.toString();
     }
     
     private static String hash(Type type, String string) throws NoSuchAlgorithmException {

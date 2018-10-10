@@ -1,0 +1,23 @@
+plugins {
+    id 'idea'
+    id 'java'
+    id 'com.github.johnrengelman.shadow' version '4.0.1'
+    id 'application'
+}
+
+group 'net.lyxnx'
+version '2.0'
+
+mainClassName = 'net.lyxnx.clcrypt.Main'
+
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = sourceCompatibility
+
+repositories {
+    jcenter()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'net.sf.jopt-simple:jopt-simple:6.0-alpha-3'
+}

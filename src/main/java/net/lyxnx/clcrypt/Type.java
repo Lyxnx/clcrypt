@@ -11,7 +11,7 @@ public enum Type {
     
     public static Type of(String string) {
         return Arrays.stream(values())
-                .filter(t -> t.name().toLowerCase().replace("_", "").equalsIgnoreCase(string))
+                .filter(t -> t.name().replace("_", "").equalsIgnoreCase(string))
                 .findFirst().orElse(null);
     }
     
